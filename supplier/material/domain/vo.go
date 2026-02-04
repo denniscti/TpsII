@@ -53,3 +53,9 @@ type Image struct {
 	Description string               `json:"description"` // 描述
 	ImageUri    map[ImageType]string `json:"imageUri"`    // 圖片網址
 }
+
+func NewMarkEvidence(image *Image) *Mark {
+	return &Mark{
+		Image: image,
+	}
+}

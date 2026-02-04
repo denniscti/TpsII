@@ -165,3 +165,28 @@ func (m *Cost) ValidateCostAvailable(at time.Time) (bool, error) {
 
 	return true, nil
 }
+
+func (m *Material) HasExpiredMark(at time.Time) bool {
+	for _, mark := range m.marks {
+		if mark != nil && mark.IsExpired(at) {
+			return true
+		}
+	}
+	return false
+}
+
+func (m *Mark) HasNoEvidence() bool {
+	if m == nil {
+		return true
+	}
+	return m.IsMissing()
+}
+
+func (m *Material) HasMarkWithoutEvidence() bool {
+	for _, mark := range m.marks {
+		if mark != nil && mark.HasNoEvidence() {
+			return true
+		}
+	}
+	return false
+}

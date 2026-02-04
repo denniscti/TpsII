@@ -5,32 +5,27 @@ import (
 	"time"
 )
 
-type MarkValidity struct {
-	startDate   time.Time
-	expiredDate *time.Time // nil = 永久有效
-}
-
-func NewMarkValidity(start time.Time, expired *time.Time) (*MarkValidity, error) {
-	if !start.IsZero() && expired != nil {
+func NewMarkValidity(start time.Time, expired time.Time) (*Mark, error) {
+	if !start.IsZero() && expired.IsZero() {
 		if expired.Before(start) {
 			return nil, errors.New("mark expiredDate cannot be before startDate")
 		}
 	}
 
-	return &MarkValidity{
-		startDate:   start,
-		expiredDate: expired,
+	return &Mark{
+		StartDate:   start,
+		ExpiredDate: expired,
 	}, nil
 }
 
-func (v *MarkValidity) IsExpired(at time.Time) bool {
+func (v *Mark) IsExpired(at time.Time) bool {
 	if v == nil {
 		return true
 	}
 
-	if v.expiredDate == nil {
+	if v.ExpiredDate.Before(at) {
 		return false
 	}
 
-	return at.After(*v.expiredDate)
+	return at.After(v.ExpiredDate)
 }
