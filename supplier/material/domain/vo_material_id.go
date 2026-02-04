@@ -8,7 +8,7 @@ type MaterialID struct {
 
 func NewMaterialID(v string) (MaterialID, error) {
 	if v == "" {
-		return MaterialID{}, errors.New("material id cannot be empty")
+		return MaterialID{}, errors.New("materialID cannot be empty")
 	}
 	return MaterialID{value: v}, nil
 }

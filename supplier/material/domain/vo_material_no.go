@@ -8,7 +8,7 @@ type MaterialNo struct {
 
 func NewMaterialNo(v string) (MaterialNo, error) {
 	if v == "" {
-		return MaterialNo{}, errors.New("material no cannot be empty")
+		return MaterialNo{}, errors.New("materialNo cannot be empty")
 	}
 	return MaterialNo{value: v}, nil
 }
